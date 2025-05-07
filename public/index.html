@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Album Wulan dari✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cyan-light: #a0e7e5;
+            --cyan-medium: #79d7c6;
+            --cyan-dark: #00a99d;
+            
+            --dracula-bg: #282a36;
+            --dracula-dark-purple: #44475a;
+            --dracula-purple: #bd93f9;
+            --dracula-pink: #ff79c6;
+            --dracula-comment: #6272a4;
+
+            --text-light: #f8f8f2;
+            --text-dark: #333;
+            --white: #ffffff;
+            --soft-cloud: #f1f1f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, var(--cyan-light) 0%, var(--dracula-bg) 70%);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: var(--white);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .album-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 25px;
+            background-color: rgba(40, 42, 54, 0.9);
+            border-radius: 25px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .album-container::before, .album-container::after {
+            content: '';
+            position: absolute;
+            background-color: var(--soft-cloud);
+            border-radius: 50%;
+            opacity: 0.8;
+            z-index: 0;
+        }
+
+        .album-container::before {
+            width: 200px;
+            height: 200px;
+            top: -80px;
+            left: -50px;
+            box-shadow: 60px 20px 0 -10px var(--soft-cloud),
+                        100px -10px 0 0 var(--soft-cloud);
+        }
+
+        .album-container::after {
+            width: 120px;
+            height: 120px;
+            top: -40px;
+            right: -30px;
+            box-shadow: 40px 15px 0 -5px var(--soft-cloud);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-family: 'Mochiy Pop P One', sans-serif;
+            font-size: 2.8em;
+            color: var(--dracula-pink);
+            text-shadow: 2px 2px 0 var(--dracula-dark-purple), 
+                         -1px -1px 0 var(--cyan-medium);
+            letter-spacing: 1px;
+        }
+        
+        header h1 .icon {
+            font-size: 0.8em;
+            vertical-align: middle;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+            min-height: 200px; 
+        }
+        .photo-grid p.message { /* Lebih spesifik untuk pesan di photo-grid */
+            grid-column: 1 / -1; 
+            text-align: center;
+            color: var(--cyan-light);
+            padding: 20px;
+            font-size: 1.1em;
+        }
+        .photo-grid p.message a {
+            color: var(--dracula-pink);
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .photo-grid p.message a:hover {
+            text-decoration: underline;
+        }
+
+
+        .photo-item {
+            background-color: var(--dracula-dark-purple);
+            border: 3px solid var(--cyan-medium);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        @keyframes fadeInItem {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .photo-item.animate-in {
+            animation: fadeInItem 0.5s ease-out forwards;
+        }
+        
+        .photo-item::after {
+            content: '💖';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            color: var(--dracula-pink);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .photo-item:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .photo-item:hover {
+            transform: translateY(-10px) scale(1.05) rotate(1.5deg);
+            box-shadow: 0 12px 28px var(--dracula-pink), 0 0 20px var(--cyan-light);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 3px solid var(--cyan-medium);
+            background-color: var(--dracula-bg); /* Warna latar jika gambar transparan atau lambat load */
+        }
+
+        .photo-item .caption {
+            padding: 15px;
+            font-size: 0.95em;
+            color: var(--dracula-purple);
+            text-align: center;
+            background-color: var(--dracula-bg);
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            word-break: break-word;
+        }
+        
+        .photo-item:hover .caption {
+            background-color: var(--dracula-pink);
+            color: var(--dracula-bg);
+        }
+
+        .photo-item .caption strong {
+            color: var(--dracula-pink);
+            transition: color 0.3s ease;
+        }
+        
+        .photo-item:hover .caption strong {
+            color: var(--dracula-bg);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .modal-content-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: auto;
+            max-width: 85%;
+            max-height: 85%;
+            position: relative;
+            transform: scale(0.7);
+            animation: zoomIn 0.3s ease-out forwards;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 121, 198, 0.6);
+            background-color: var(--dracula-dark-purple); /* Warna latar jika gambar transparan atau lambat load */
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1;}
+        }
+
+        @keyframes zoomOut {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(0.7); opacity: 0;}
+        }
+
+        .modal-caption {
+            margin-top: 15px;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: var(--cyan-light);
+            font-size: 1.2em;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 20px; 
+            left: 50%;
+            transform: translateX(-50%);
+            word-break: break-word;
+        }
+        .modal-caption strong {
+            color: var(--dracula-pink);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: var(--cyan-light);
+            font-size: 45px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: var(--dracula-pink);
+            text-decoration: none;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(40, 42, 54, 0.7);
+            color: var(--cyan-light);
+            font-size: 30px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            z-index: 1002;
+        }
+        .modal-nav:hover {
+            background-color: var(--dracula-pink);
+            color: var(--dracula-bg);
+        }
+        .modal-prev { left: 20px; }
+        .modal-next { right: 20px; }
+        
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2em; }
+            .photo-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+            .photo-item img { height: 180px; }
+            .album-container::before { width: 150px; height: 150px; top: -60px; left: -40px; }
+            .album-container::after { width: 90px; height: 90px; top: -30px; right: -20px; }
+            .modal-nav { width: 40px; height: 40px; font-size: 24px; }
+            .modal-prev { left: 10px; }
+            .modal-next { right: 10px; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.8em; }
+            .photo-grid { grid-template-columns: 1fr; }
+            .photo-item img { height: 200px; }
+            .modal-content { max-width: 95%; max-height: 95%; }
+            .close-modal { font-size: 35px; top: 15px; right: 25px; }
+            .modal-caption { font-size: 1em; bottom: 10px; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="album-container">
+        <header>
+            <h1><span class="icon">🎀</span> My Album Wulan  <span class="icon">🍭</span></h1>
+        </header>
+
+        <div class="photo-grid" id="photoGrid">
+            <!-- Foto akan dimuat di sini oleh JavaScript -->
+        </div>
+        
+    </div>
+
+    <div id="myModal" class="modal">
+        <span class="close-modal" id="closeModal">×</span>
+        <div class="modal-content-wrapper">
+            <button class="modal-nav modal-prev" id="modalPrev">❮</button>
+            <img class="modal-content" id="modalImage">
+            <button class="modal-nav modal-next" id="modalNext">❯</button>
+        </div>
+        <div class="modal-caption" id="modalCaptionText"></div>
+    </div>
+
+    <script>
+        const photoGrid = document.getElementById('photoGrid');
+        const modal = document.getElementById('myModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalCaptionText = document.getElementById('modalCaptionText');
+        const closeModalBtn = document.getElementById('closeModal');       
+        const modalPrevBtn = document.getElementById('modalPrev');
+        const modalNextBtn = document.getElementById('modalNext');
+        
+        let photos = []; 
+        let currentPhotoIndex = 0;
+
+        async function loadPhotosFromServer() {
+            console.log("Mencoba memuat foto dari server...");
+            photoGrid.innerHTML = '<p class="message">Memuat foto...</p>';
+            try {
+                const response = await fetch('/api/photos');
+                console.log("Status respons dari /api/photos:", response.status);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ message: `Gagal memuat foto: ${response.status} ${response.statusText}` }));
+                    throw new Error(errorData.message);
+                }
+                const serverPhotos = await response.json();
+                console.log("Data diterima dari /api/photos:", serverPhotos);
+                
+                if (serverPhotos && serverPhotos.length > 0) {
+                    photos = serverPhotos.map(p => ({
+                        id: p.id || `fallback-${Date.now()}`, // Fallback ID jika tidak ada
+                        src: p.src || 'https://via.placeholder.com/200/FF0000/FFFFFF?Text=ErrorSrc', 
+                        alt: p.alt || 'Foto album',
+                        caption: p.caption || 'Tanpa deskripsi',
+                        // Properti lain dari Cloudinary jika Anda ingin menggunakannya di frontend
+                        width: p.width,
+                        height: p.height,
+                        format: p.format
+                    }));
+                    console.log("Array 'photos' setelah mapping:", photos);
+                } else {
+                    console.log("Tidak ada foto di server atau server mengembalikan array kosong.");
+                    photos = []; 
+                }
+            } catch (error) {
+                console.error("Error saat memuat foto dari server:", error);
+                photos = []; 
+                photoGrid.innerHTML = `<p class="message">Gagal memuat foto: ${error.message}. <br>Silakan coba lagi nanti atau kunjungi halaman admin untuk upload.</p>`;
+                return; 
+            }
+            renderPhotoGrid(); 
+        }
+        
+        function createPhotoElement(photoData, index) {
+            const photoItem = document.createElement('div');
+            photoItem.classList.add('photo-item');
+            photoItem.dataset.index = index;
+
+            const img = document.createElement('img');
+            img.src = photoData.src; 
+            img.alt = photoData.alt;
+            // Cloudinary URL biasanya sudah dioptimasi, tapi fallback tetap bagus
+            img.onerror = function() { 
+                this.onerror=null; 
+                this.src='https://via.placeholder.com/200x200/44475a/f8f8f2?text=Gagal+Muat';
+                this.alt='Gambar tidak dapat dimuat';
+            };
+
+            const caption = document.createElement('p');
+            caption.classList.add('caption');
+            caption.innerHTML = photoData.caption; // Caption bisa berisi HTML
+
+            photoItem.appendChild(img);
+            photoItem.appendChild(caption);
+
+            photoItem.onclick = function() { 
+                currentPhotoIndex = parseInt(this.dataset.index);
+                openModalWithPhoto(currentPhotoIndex);
+            }
+            return photoItem;
+        }
+
+        function renderPhotoGrid() {
+            photoGrid.innerHTML = ''; 
+            if (photos.length === 0) {
+                photoGrid.innerHTML = '<p class="message">Belum ada foto di album ini. <br>Untuk upload, kunjungi halaman admin secara manual.</p>';
+                return;
+            }
+            photos.forEach((photo, index) => {
+                const photoElement = createPhotoElement(photo, index);
+                photoGrid.appendChild(photoElement);
+                photoElement.style.animationDelay = `${index * 0.05}s`;
+                photoElement.classList.add('animate-in');
+            });
+        }
+        
+        function openModalWithPhoto(index) {
+            if (index < 0 || index >= photos.length) return;
+            
+            currentPhotoIndex = index;
+            const photo = photos[currentPhotoIndex];
+            
+            modal.style.display = "block";
+            // Untuk modal, kita bisa meminta Cloudinary versi lebih besar jika perlu
+            // Misalnya, jika Anda menyimpan URL thumbnail di `photo.src`
+            // dan URL full di `photo.original_src` atau membuat URL baru.
+            // Untuk saat ini, kita gunakan src yang sama.
+            modalImage.src = photo.src; 
+            modalImage.alt = photo.alt;
+            modalImage.onerror = function() { 
+                this.onerror=null; 
+                this.src='https://via.placeholder.com/600x400/282a36/f8f8f2?text=Gagal+Muat+Gambar+Besar';
+                this.alt='Gambar tidak dapat dimuat';
+            };
+            modalCaptionText.innerHTML = photo.caption; 
+            
+            modal.style.animation = "fadeIn 0.3s ease-out";
+            modalImage.style.animation = "zoomIn 0.3s ease-out forwards";
+
+            modalPrevBtn.style.display = (currentPhotoIndex === 0) ? 'none' : 'flex';
+            modalNextBtn.style.display = (currentPhotoIndex === photos.length - 1) ? 'none' : 'flex';
+        }
+
+        closeModalBtn.onclick = function() {
+            modalImage.style.animation = "zoomOut 0.3s ease-out forwards";
+            modal.style.animation = "fadeOut 0.3s ease-out forwards";
+            setTimeout(() => {
+                 modal.style.display = "none";
+            }, 280);
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModalBtn.click();
+            }
+        }
+        
+        modalPrevBtn.onclick = function() {
+            if (currentPhotoIndex > 0) {
+                openModalWithPhoto(currentPhotoIndex - 1);
+            }
+        }
+
+        modalNextBtn.onclick = function() {
+            if (currentPhotoIndex < photos.length - 1) {
+                openModalWithPhoto(currentPhotoIndex + 1);
+            }
+        }
+
+        function createStars() {
+            const numStars = 100;
+            const body = document.body;
+            if (document.querySelectorAll('.star').length > 0) return; // Hindari duplikasi bintang
+            for (let i = 0; i < numStars; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 3}s`; 
+                star.style.animationDuration = `${Math.random() * 2 + 2}s`;
+                body.appendChild(star);
+            }
+        }
+
+        async function initializeAlbum() {
+            await loadPhotosFromServer(); 
+            createStars();
+        }
+
+        initializeAlbum();
+
+    </script>
+
+</body>
+</html>
